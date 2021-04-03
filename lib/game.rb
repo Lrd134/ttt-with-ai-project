@@ -11,10 +11,10 @@ class Game
         [2,4,6]  # Top-to-bottom, left side
         # et cetera, creating a nested array for each win combination
     ]
-    # def initialize(p1,p2,boad)
-    #     @player_1 = p1
-    #     @player_2 = p2
-    #     @board = boad
-    # end
+    def initialize(p1 = Player::Human.new("X"),p2,boad)
+        @player_1 = p1
+        @player_2 = p2
+        @board = boad
+    end
 
 end
