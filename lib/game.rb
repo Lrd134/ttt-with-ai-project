@@ -25,10 +25,9 @@ class Game
         !won? && @board.full?
     end
     def over?
-        won? || @board.full?
+        won? || @board.full? || draw?
     end
     def winner
-        # binding.pry
         if won?
             if @board.cells[won?[0]] == " "
                 return nil
@@ -38,46 +37,25 @@ class Game
             return nil
         end
     end
-    
     def turn
-             
-        puts "Please choose a number 1-9 to make your move."
-
+        
         input = current_player.move(@board)
-        
-        
         if @board.valid_move?(input)
             @board.update(input, current_player)
         else
             turn
         end
-        
-        
+        #@board.display
     end
-    # def play
-    #     if !over?
-
-    #         turn
-    #     end
-    #     if over?
-    #         if draw?
-    #         puts "Cat's Game!"
-    #         elsif won?
-    #         puts "Congratulations #{winner}, you've won!"
-    #         end
-    #     end
-        
-    # end
     def play
-        
-        turn until over? || draw?
-        if draw? 
-            puts "Cat's Game!"
-        elsif won?
-            puts "Congratulations, #{winner}" 
+        #binding.pry
+        until over?
+          self.turn
         end
-
-    end
-
-
+        if won?
+          puts "Congratulations #{winner}!"
+        elsif draw?
+          puts "Cat's Game!"
+        end
+      end
 end
