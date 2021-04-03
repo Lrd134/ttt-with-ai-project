@@ -40,6 +40,9 @@ class Game
     end
     
     def turn
+             
+        puts "Please choose a number 1-9 to make your move."
+
         input = current_player.move(@board)
         
         
