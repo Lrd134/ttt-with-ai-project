@@ -1,20 +1,80 @@
 class Game
     attr_accessor :board, :player_1, :player_2
-    WIN_COMBINATIONS = [
-        [0,1,2], # Top row
-        [3,4,5], # Middle row
-        [6,7,8], # Bottom row
-        [0,3,6], # Bottom-to-top, left to right
-        [2,5,8], # Top-to-bottom, right to left
-        [8,4,0], # Bottom-to-top, right to left
-        [1,4,7], # Top-to-bottom, center
-        [2,4,6]  # Top-to-bottom, left side
-        # et cetera, creating a nested array for each win combination
+    WIN_COMBINATIONS= [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 4, 8], [2, 4, 6],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8]
     ]
-    def initialize(p1 = Player::Human.new("X"),p2,boad)
-        @player_1 = p1
-        @player_2 = p2
-        @board = boad
+    def initialize(player_1 = Players::Human.new("X"), player_2 = Players::Human.new("O"), board = Board.new)
+        @player_1 = player_1
+        @player_2 = player_2
+        @board = board
     end
+    def current_player
+       board.turn_count.odd? ? player_2 : player_1
+    end
+    def won?
+        WIN_COMBINATIONS.detect do |combo|
+            if @board.cells[combo[0]] == @board.cells[combo[1]] && @board.cells[combo[2]] == @board.cells[combo[1]] && @board.taken?(combo[0])
+                return combo
+            end
+        end
+        return false
+    end
+    def draw?
+        !won? && @board.full?
+    end
+    def over?
+        won? || @board.full?
+    end
+    def winner
+        # binding.pry
+        if won?
+            if @board.cells[won?[0]] == " "
+                return nil
+            end
+            @board.cells[won?[0]]
+        else
+            return nil
+        end
+    end
+    
+    def turn
+        input = current_player.move(@board)
+        
+        
+        if @board.valid_move?(input)
+            @board.update(input, current_player)
+        else
+            turn
+        end
+        
+        
+    end
+    # def play
+    #     if !over?
+
+    #         turn
+    #     end
+    #     if over?
+    #         if draw?
+    #         puts "Cat's Game!"
+    #         elsif won?
+    #         puts "Congratulations #{winner}, you've won!"
+    #         end
+    #     end
+        
+    # end
+    def play
+        
+        turn until over? || draw?
+        if draw? 
+            puts "Cat's Game!"
+        elsif won?
+            puts "Congratulations, #{winner}" 
+        end
+
+    end
+
 
 end
