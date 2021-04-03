@@ -8,10 +8,10 @@ class Board
         @cells = Array.new(9, " ")
     end
     def display
-        print " #{@cells[0]} | #{@cells[1]} | #{@cells[2]} "
-        print " #{@cells[3]} | #{@cells[4]} | #{@cells[5]} "
-        print " #{@cells[6]} | #{@cells[7]} | #{@cells[8]} "
-        print "-----------"
+        puts " #{@cells[0]} | #{@cells[1]} | #{@cells[2]} "
+        puts " #{@cells[3]} | #{@cells[4]} | #{@cells[5]} "
+        puts " #{@cells[6]} | #{@cells[7]} | #{@cells[8]} "
+        puts "-----------"
     end
     def position(position)
         @cells[position.to_i - 1]   
@@ -27,7 +27,7 @@ class Board
     def turn_count
         @cells.count { | piece | piece == "X" || piece == "O"}
     end
-    def taken?(index) 
+    def taken?(index)
         position(index) == " " ? false : true
     end
     # def valid_move?(index)

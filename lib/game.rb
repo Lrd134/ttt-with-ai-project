@@ -14,9 +14,13 @@ class Game
        board.turn_count.odd? ? player_2 : player_1
     end
     def won?
+        # binding.pry
         WIN_COMBINATIONS.detect do |combo|
-            if @board.cells[combo[0]] == @board.cells[combo[1]] && @board.cells[combo[2]] == @board.cells[combo[1]] && @board.taken?(combo[0])
+            # binding.pry
+            if @board.cells[combo[0]] == @board.cells[combo[1]] && @board.cells[combo[2]] == @board.cells[combo[1]] && @board.taken?(combo[0]+1)
+                
                 return combo
+                
             end
         end
         return false
@@ -49,13 +53,17 @@ class Game
     end
     def play
         #binding.pry
-        until over?
-          self.turn
+        while !over?
+          turn
         end
         if won?
-          puts "Congratulations #{winner}!"
+            puts "Congratulations #{winner}!"
+            return
         elsif draw?
-          puts "Cat's Game!"
+            puts "Cat's Game!"
+            return
         end
-      end
+        # binding.pry
+    end
+
 end
